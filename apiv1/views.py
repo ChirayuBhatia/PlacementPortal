@@ -37,7 +37,7 @@ class EducationListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Education.objects.filter(student__enrollment_no=self.request.user.id)
+        return Education.objects.filter(student__enrollment_no=self.request.user.username)
 
 
 class EducationDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -45,7 +45,7 @@ class EducationDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Education.objects.filter(student__enrollment_no=self.request.user.id)
+        return Education.objects.filter(student__enrollment_no=self.request.user.username)
 
 
 class InternshipListCreateView(generics.ListCreateAPIView):
@@ -53,7 +53,7 @@ class InternshipListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Internship.objects.filter(student__enrollment_no=self.request.user.id)
+        return Internship.objects.filter(student__enrollment_no=self.request.user.username)
 
 
 class InternshipDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -61,7 +61,7 @@ class InternshipDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Internship.objects.filter(student__enrollment_no=self.request.user.id)
+        return Internship.objects.filter(student__enrollment_no=self.request.user.username)
 
 
 class ProjectListCreateView(generics.ListCreateAPIView):
@@ -69,7 +69,7 @@ class ProjectListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Project.objects.filter(student__enrollment_no=self.request.user.id)
+        return Project.objects.filter(student__enrollment_no=self.request.user.username)
 
 
 class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -77,7 +77,7 @@ class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Project.objects.filter(student__enrollment_no=self.request.user.id)
+        return Project.objects.filter(student__enrollment_no=self.request.user.username)
 
 
 class CertificateListCreateView(generics.ListCreateAPIView):
@@ -85,7 +85,7 @@ class CertificateListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Certificate.objects.filter(student__enrollment_no=self.request.user.id)
+        return Certificate.objects.filter(student__enrollment_no=self.request.user.username)
 
 
 class CertificateDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -93,5 +93,5 @@ class CertificateDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Certificate.objects.filter(student__enrollment_no=self.request.user.id)
+        return Certificate.objects.filter(student__enrollment_no=self.request.user.username)
 

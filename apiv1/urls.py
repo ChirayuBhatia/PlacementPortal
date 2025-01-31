@@ -11,18 +11,18 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('student/', StudentListCreateView.as_view(), name='student'),
+    path('student/', StudentListCreateView.as_view(), name='add or view student'),
     path('student/<pk>/', StudentDetailView.as_view(), name='student'),
 
-    path('education/', EducationListCreateView.as_view(), name='education'),
-    path('education/<int:pk>/', EducationDetailView.as_view(), name='education'),
+    path('education/', EducationListCreateView.as_view(), name='add or view education'),
+    path('education/<pk>/', EducationDetailView.as_view(), name='education'),
 
-    path('internship/', InternshipListCreateView.as_view(), name='internship'),
-    path('internship/<int:pk>/', InternshipDetailView.as_view(), name='internship'),
+    path('internship/', InternshipListCreateView.as_view(), name='add or view internship'),
+    path('internship/<pk>/', InternshipDetailView.as_view(), name='internship'),
 
-    path('project/', ProjectListCreateView.as_view(), name='project'),
-    path('project/<int:pk>/', ProjectDetailView.as_view(), name='project'),
+    path('project/', ProjectListCreateView.as_view(), name='add or view project'),
+    path('project/<pk>/', ProjectDetailView.as_view(), name='project'),
 
-    path('certificate/', CertificateListCreateView.as_view(), name='certificate'),
-    path('certificate/<int:pk>/', CertificateDetailView.as_view(), name='certificate'),
+    path('certificate/', CertificateListCreateView.as_view(), name='add or view certificate'),
+    path('certificate/<pk>/', CertificateDetailView.as_view(), name='certificate'),
 ]
