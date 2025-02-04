@@ -1,9 +1,8 @@
 from .serializers import (StudentSerializer, EducationSerializer, InternshipSerializer, ProjectSerializer,
-                          CertificateSerializer)
+                          CertificateSerializer, UserSerializer)
 from .models import Student, Education, Internship, Project, Certificate
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth.models import User
-from .serializers import UserSerializer
 from rest_framework import generics
 
 

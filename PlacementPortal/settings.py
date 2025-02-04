@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'apiv1.apps.Apiv1Config',
+    'jobsv1.apps.Jobsv1Config',
 ]
 
 MIDDLEWARE = [
