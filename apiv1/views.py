@@ -1,6 +1,6 @@
 from .serializers import (StudentSerializer, EducationSerializer, InternshipSerializer, ProjectSerializer,
-                          CertificateSerializer, UserSerializer)
-from .models import Student, Education, Internship, Project, Certificate
+                          CertificateSerializer, UserSerializer, SkillSerializer, SummarySerializer, LanguageSerializer)
+from .models import Student, Education, Internship, Project, Certificate, Skill, Summary, Language
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth.models import User
 from rest_framework import generics
@@ -94,3 +94,50 @@ class CertificateDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return Certificate.objects.filter(student__enrollment_no=self.request.user.username)
 
+
+class SkillListCreateView(generics.ListCreateAPIView):
+    serializer_class = SkillSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Skill.objects.filter(student__enrollment_no=self.request.user.username)
+
+
+class SkillDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = SkillSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Skill.objects.filter(student__enrollment_no=self.request.user.username)
+
+
+class SummaryListCreateView(generics.ListCreateAPIView):
+    serializer_class = SummarySerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Summary.objects.filter(student__enrollment_no=self.request.user.username)
+
+
+class SummaryDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = SummarySerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Summary.objects.filter(student__enrollment_no=self.request.user.username)
+
+
+class LanguageListCreateView(generics.ListCreateAPIView):
+    serializer_class = LanguageSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Language.objects.filter(student__enrollment_no=self.request.user.username)
+
+
+class LanguageDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = LanguageSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Language.objects.filter(student__enrollment_no=self.request.user.username)

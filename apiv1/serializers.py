@@ -1,6 +1,6 @@
+from .models import Student, Education, Internship, Project, Certificate, Summary, Skill, Language
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Student, Education, Internship, Project, Certificate
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -43,3 +43,20 @@ class CertificateSerializer(serializers.ModelSerializer):
         model = Certificate
         fields = '__all__'
 
+
+class SummarySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Summary
+        fields = '__all__'
+
+
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = '__all__'
+
+
+class SkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Skill
+        fields = '__all__'

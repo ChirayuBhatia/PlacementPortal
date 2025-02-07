@@ -4,9 +4,9 @@ from django.db import models
 
 class Student(models.Model):
     GENDER_CHOICES = [
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('O', 'Other'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other'),
     ]
     BRANCH_CHOICES = [
         ('IT', 'Information Technology'),
@@ -22,15 +22,11 @@ class Student(models.Model):
 
     enrollment_no = models.OneToOneField(User, to_field='username', on_delete=models.CASCADE, primary_key=True, unique=True)
     branch = models.CharField(max_length=50, choices=BRANCH_CHOICES)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     dob = models.DateField()
     current_location = models.CharField(max_length=255)
     permanent_address = models.JSONField()
     mobile_number = models.CharField(max_length=15)
-    skills = models.JSONField()
-    languages = models.JSONField()
-    summary = models.TextField()
-    resume = models.URLField()
 
     class Meta:
         verbose_name = "Student"
@@ -38,6 +34,33 @@ class Student(models.Model):
 
     def __str__(self):
         return self.enrollment_no.username
+
+
+class Skill(models.Model):
+    skill = models.JSONField()
+    student = models.OneToOneField(Student, to_field='enrollment_no', on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Skill"
+        verbose_name_plural = "Skills"
+
+
+class Language(models.Model):
+    language = models.JSONField()
+    student = models.OneToOneField(Student, to_field='enrollment_no', on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Language"
+        verbose_name_plural = "Languages"
+
+
+class Summary(models.Model):
+    summary = models.TextField()
+    student = models.OneToOneField(Student, to_field='enrollment_no', on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Summary"
+        verbose_name_plural = "Summary"
 
 
 class Education(models.Model):
@@ -93,7 +116,7 @@ class Certificate(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     certificate_name = models.CharField(max_length=255)
     organization_name = models.CharField(max_length=255)
-    skills_learned = models.TextField()
+    skills_learned = models.JSONField()
 
     class Meta:
         verbose_name = "Certificate"

@@ -15,7 +15,7 @@ class Job(models.Model):
     package = models.FloatField()
 
     def __str__(self):
-        return f"{self.company_name} - {self.job_title}"
+        return f"{self.company} - {self.title}"
 
 
 class ApplicationStatus(models.Model):
