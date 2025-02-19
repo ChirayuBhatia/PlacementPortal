@@ -10,6 +10,8 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
+        validated_data['first_name'] = validated_data.get('first_name', '').title()
+        validated_data['last_name'] = validated_data.get('last_name', '').title()
         user = User.objects.create_user(**validated_data)
         return user
 
@@ -22,7 +24,7 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ['first_name', 'last_name', 'email'] + ['enrollment_no', 'branch', 'gender', 'dob', 'current_location',
-                                                         'permanent_address', 'mobile_number']
+                                                         'permanent_address', 'mobile_number', 'job_status']
 
 
 class EducationSerializer(serializers.ModelSerializer):

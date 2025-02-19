@@ -11,8 +11,9 @@ class Job(models.Model):
     company = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
-    description = models.URLField()
+    description = models.TextField()
     package = models.FloatField()
+    jd = models.URLField()
 
     def __str__(self):
         return f"{self.company} - {self.title}"

@@ -28,6 +28,7 @@ class Student(models.Model):
     current_location = models.CharField(max_length=255)
     permanent_address = models.JSONField()
     mobile_number = models.CharField(max_length=15)
+    job_status = models.CharField(max_length=50)  # Placed, Unplaced
 
     class Meta:
         verbose_name = "Student"
@@ -117,6 +118,8 @@ class Certificate(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     certificate_name = models.CharField(max_length=255)
     organization_name = models.CharField(max_length=255)
+    issue_date = models.DateField()
+    certificate_id = models.CharField(max_length=255)
     skills_learned = models.JSONField()
 
     class Meta:

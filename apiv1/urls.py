@@ -3,13 +3,14 @@ from .views import (RegisterUserView, StudentListCreateView, StudentDetailView, 
                     EducationDetailView, InternshipListCreateView, InternshipDetailView, ProjectListCreateView,
                     ProjectDetailView, CertificateListCreateView, CertificateDetailView, SkillDetailView,
                     SummaryListCreateView, SummaryDetailView, SkillListCreateView, LanguageDetailView,
-                    LanguageListCreateView)
+                    LanguageListCreateView, AddStudentsView)
 from django.urls import path
 
 urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name='token'),
     path('register/', RegisterUserView.as_view(), name='register'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('add_students/', AddStudentsView.as_view(), name='add_students'),
 ]
 
 urlpatterns += [
