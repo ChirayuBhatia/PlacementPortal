@@ -70,6 +70,7 @@ class Education(models.Model):
     qualification = models.CharField(max_length=255)
     board_university = models.CharField(max_length=255)
     medium = models.CharField(max_length=50)
+    branch = models.CharField(max_length=50)
     percentage_cgpa = models.CharField(max_length=10)
     school_college_name = models.CharField(max_length=255)
     start_year = models.IntegerField()
