@@ -1,4 +1,5 @@
-from .models import Student, Education, Internship, Project, Certificate, Summary, Skill, Language
+from .models import (Student, Education, Internship, Project, Certificate, Summary, Skill, Language, CompetitiveExams,
+                     Accomplishments)
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
@@ -20,6 +21,7 @@ class StudentSerializer(serializers.ModelSerializer):
     first_name = serializers.ReadOnlyField(source='enrollment_no.first_name')
     last_name = serializers.ReadOnlyField(source='enrollment_no.last_name')
     email = serializers.ReadOnlyField(source='enrollment_no.email')
+    enrollment_no = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
 
     class Meta:
         model = Student
@@ -66,4 +68,16 @@ class LanguageSerializer(serializers.ModelSerializer):
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
+        fields = '__all__'
+
+
+class AccomplishmentsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Accomplishments
+        fields = '__all__'
+
+
+class CompetitiveExamsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompetitiveExams
         fields = '__all__'

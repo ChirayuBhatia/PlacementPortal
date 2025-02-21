@@ -1,7 +1,10 @@
 from django.http import HttpResponse
+from django.contrib.auth.hashers import make_password
 from .serializers import (StudentSerializer, EducationSerializer, InternshipSerializer, ProjectSerializer,
-                          CertificateSerializer, UserSerializer, SkillSerializer, SummarySerializer, LanguageSerializer)
-from .models import Student, Education, Internship, Project, Certificate, Skill, Summary, Language
+                          CertificateSerializer, UserSerializer, SkillSerializer, SummarySerializer, LanguageSerializer,
+                          AccomplishmentsSerializer, CompetitiveExamsSerializer)
+from .models import (Student, Education, Internship, Project, Certificate, Skill, Summary, Language, Accomplishments,
+                     CompetitiveExams)
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
@@ -162,56 +165,79 @@ class AddStudentsView(APIView):
         )
         return response
 
-    # def post(self, request, *args, **kwargs):
-    #     data = request.data
-    #     for x in data:
-    #         user = User.objects.create_user(
-    #             username=x['enrollment_no'],
-    #             email=x['email'],
-    #             first_name=x['first_name'],
-    #             last_name=x['last_name'],
-    #         )
-    #         user.set_password(x['enrollment_no'])
-    #         user.save()
-    #         Student.objects.create(
-    #             enrollment_no=user,
-    #             branch=x['branch'],
-    #             gender=x['gender'],
-    #             dob=x['dob'],
-    #             current_location=x['current_location'],
-    #             permanent_address=x['permanent_address'],
-    #             mobile_number=x['mobile_number'],
-    #         )
-    # def post(self, request, *args, **kwargs):
-    #     file = request.FILES.get('file')  # Get the uploaded file
-    #
-    #     if not file:
-    #         return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
-    #
-    #     try:
-    #         decoded_file = file.read().decode('utf-8')  # Decode the file
-    #         csv_reader = csv.DictReader(io.StringIO(decoded_file))  # Read CSV
-    #
-    #         records = []
-    #         errors = []
-    #
-    #         for row in csv_reader:
-    #             print(row)
-    #             serializer = UserSerializer(data=row)  # Validate row
-    #             if serializer.is_valid():
-    #                 records.append(serializer.validated_data)
-    #             else:
-    #                 errors.append({"row": row, "errors": serializer.errors})
-    #
-    #         if errors:
-    #             return Response({"errors": errors}, status=status.HTTP_400_BAD_REQUEST)
-    #
-    #         # Bulk create valid records
-    #         User.objects.bulk_create([User(**data) for data in records])
-    #
-    #         return Response({"message": "CSV uploaded successfully", "records_added": len(records)},
-    #                         status=status.HTTP_201_CREATED)
-    #
-    #     except Exception as e:
-    #         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, *args, **kwargs):
+        file = request.FILES.get('file')  # Get the uploaded file
+
+        if not file:
+            return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            decoded_file = file.read().decode('utf-8')  # Decode the file
+            csv_reader = csv.DictReader(io.StringIO(decoded_file))  # Read CSV
+            csv_reader1 = csv.DictReader(io.StringIO(decoded_file))  # Read CSV
+
+            users = []
+            errors = []
+            students = []
+
+            for row in csv_reader:
+                user_serializer = UserSerializer(data=row)  # Validate row
+
+                if user_serializer.is_valid():
+                    users.append(user_serializer.validated_data)
+                else:
+                    errors.append({"row": row, "errors": user_serializer.errors})
+
+            User.objects.bulk_create([User(**data) for data in users])
+
+            # Bulk create valid records
+            for row in csv_reader1:
+                row['enrollment_no'] = row['username']
+                student_serializer = StudentSerializer(data=row)
+                if student_serializer.is_valid():
+                    students.append(student_serializer.validated_data)
+                else:
+                    errors.append({"row": row, "errors": student_serializer.errors})
+            if errors:
+                return Response({"errors": errors}, status=status.HTTP_400_BAD_REQUEST)
+
+            Student.objects.bulk_create([Student(**data) for data in students])
+
+            return Response({"message": "CSV uploaded successfully", "users_added": len(users), "students_updated": len(students)},
+                            status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AccomplishmentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = AccomplishmentsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Accomplishments.objects.filter(student__enrollment_no=self.request.user.username)
+
+
+class AccomplishmentsListCreateView(generics.ListCreateAPIView):
+    serializer_class = AccomplishmentsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Accomplishments.objects.filter(student__enrollment_no=self.request.user.username)
+
+
+class CompetitiveExamsDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = CompetitiveExamsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return CompetitiveExams.objects.filter(student__enrollment_no=self.request.user.username)
+
+
+class CompetitiveExamsListCreateView(generics.ListCreateAPIView):
+    serializer_class = CompetitiveExamsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return CompetitiveExams.objects.filter(student__enrollment_no=self.request.user.username)
 

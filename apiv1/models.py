@@ -22,13 +22,13 @@ class Student(models.Model):
 
     enrollment_no = models.OneToOneField(User, to_field='username', on_delete=models.CASCADE, primary_key=True,
                                          unique=True)
-    branch = models.CharField(max_length=50, choices=BRANCH_CHOICES)
-    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
-    dob = models.DateField()
-    current_location = models.CharField(max_length=255)
-    permanent_address = models.JSONField()
-    mobile_number = models.CharField(max_length=15)
-    job_status = models.CharField(max_length=50)  # Placed, Unplaced
+    branch = models.CharField(max_length=50, choices=BRANCH_CHOICES, blank=True, null=True)
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, blank=True, null=True)
+    dob = models.DateField(blank=True, null=True)
+    current_location = models.CharField(max_length=255, blank=True, null=True)
+    permanent_address = models.JSONField(blank=True, null=True)
+    mobile_number = models.CharField(max_length=15, blank=True, null=True)
+    job_status = models.CharField(max_length=50, default="Unplaced")  # Placed, Unplaced
 
     class Meta:
         verbose_name = "Student"
@@ -70,7 +70,7 @@ class Education(models.Model):
     qualification = models.CharField(max_length=255)
     board_university = models.CharField(max_length=255)
     medium = models.CharField(max_length=50)
-    branch = models.CharField(max_length=50)
+    branch = models.CharField(max_length=50, blank=True, null=True)
     percentage_cgpa = models.CharField(max_length=10)
     school_college_name = models.CharField(max_length=255)
     start_year = models.IntegerField()
@@ -105,7 +105,8 @@ class Project(models.Model):
     project_name = models.CharField(max_length=255)
     description = models.TextField()
     skills_used = models.JSONField()
-    links = models.URLField(blank=True, null=True)
+    github_link = models.URLField(blank=True, null=True)
+    hosted_link = models.URLField(blank=True, null=True)
 
     class Meta:
         verbose_name = "Project"
@@ -129,3 +130,19 @@ class Certificate(models.Model):
 
     def __str__(self):
         return self.certificate_name
+
+
+class Accomplishments(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    summary = models.TextField(blank=True, null=True)
+    leadership = models.TextField(blank=True, null=True)
+    research_paper = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.summary
+
+
+class CompetitiveExams(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    exam_name = models.CharField(max_length=255)
+    score = models.FloatField()
