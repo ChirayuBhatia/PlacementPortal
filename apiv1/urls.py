@@ -3,7 +3,8 @@ from .views import (RegisterUserView, StudentListCreateView, StudentDetailView, 
                     EducationDetailView, InternshipListCreateView, InternshipDetailView, ProjectListCreateView,
                     ProjectDetailView, CertificateListCreateView, CertificateDetailView, SkillDetailView,
                     SummaryListCreateView, SummaryDetailView, SkillListCreateView, LanguageDetailView,
-                    LanguageListCreateView, AddStudentsView)
+                    LanguageListCreateView, AddStudentsView, AccomplishmentsListCreateView, AccomplishmentDetailView,
+                    CompetitiveExamsDetailView, CompetitiveExamsListCreateView)
 from django.urls import path
 
 urlpatterns = [
@@ -37,4 +38,10 @@ urlpatterns += [
 
     path('summary/', SummaryListCreateView.as_view(), name='add or view summary'),
     path('summary/<pk>/', SummaryDetailView.as_view(), name='summary'),
+
+    path('accomplishments/', AccomplishmentsListCreateView.as_view(), name='add or view accomplishments'),
+    path('accomplishments/<pk>/', AccomplishmentDetailView.as_view(), name='accomplishment'),
+
+    path('competitive_exams/', CompetitiveExamsListCreateView.as_view(), name='add or view competitive_exams'),
+    path('competitive_exams/<pk>', CompetitiveExamsDetailView.as_view(), name='competitive_exam'),
 ]
