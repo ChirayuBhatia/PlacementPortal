@@ -184,6 +184,7 @@ class AddStudentsView(APIView):
                 user_serializer = UserSerializer(data=row)  # Validate row
 
                 if user_serializer.is_valid():
+                    user_serializer.validated_data['password'] = make_password(user_serializer.validated_data['password'])
                     users.append(user_serializer.validated_data)
                 else:
                     errors.append({"row": row, "errors": user_serializer.errors})
