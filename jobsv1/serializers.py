@@ -9,9 +9,8 @@ class JobSerializer(serializers.ModelSerializer):
 
 
 class ApplicationSerializer(serializers.ModelSerializer):
+    jobs = JobSerializer(read_only=True, source='job', required=False)
+
     class Meta:
         model = ApplicationStatus
         fields = '__all__'
-
-    def get_queryset(self):
-        return ApplicationStatus.objects.filter(user=self.context['request'].user)

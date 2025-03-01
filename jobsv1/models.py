@@ -26,7 +26,7 @@ class ApplicationStatus(models.Model):
 
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    status = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, default='Eligible')
     remark = models.TextField()
 
     def __str__(self):
