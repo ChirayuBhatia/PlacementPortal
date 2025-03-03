@@ -43,5 +43,5 @@ urlpatterns += [
     path('accomplishments/<pk>/', AccomplishmentDetailView.as_view(), name='accomplishment'),
 
     path('competitive_exams/', CompetitiveExamsListCreateView.as_view(), name='add or view competitive_exams'),
-    path('competitive_exams/<pk>', CompetitiveExamsDetailView.as_view(), name='competitive_exam'),
+    path('competitive_exams/<pk>/', CompetitiveExamsDetailView.as_view(), name='competitive_exam'),
 ]

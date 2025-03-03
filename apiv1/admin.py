@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Student, Education, Internship, Project, Certificate, Skill, Summary, Language
+from .models import (Student, Education, Internship, Project, Certificate, Skill, Summary, Language, Accomplishments,
+                     CompetitiveExams, )
 
 
 # Register your models here.
@@ -45,3 +46,29 @@ class SummaryAdmin(admin.ModelAdmin):
 @admin.register(Language)
 class LanguageAdmin(admin.ModelAdmin):
     list_display = ('student', 'language')
+
+
+@admin.register(CompetitiveExams)
+class CompetitiveExamsAdmin(admin.ModelAdmin):
+    list_display = ['id']
+    # list_filter = ['']
+    # fields = ['']
+    # inlines = []
+    # raw_id_fields = ['']
+    # readonly_fields = ['']
+    # search_fields = ['']
+    # ordering = ['']
+
+
+@admin.register(Accomplishments)
+class AccomplishmentsAdmin(admin.ModelAdmin):
+    list_display = ['id']
+    # list_filter = ['']
+    # fields = ['']
+    # inlines = []
+    # raw_id_fields = ['']
+    # readonly_fields = ['']
+    # search_fields = ['']
+    # ordering = ['']
+
+
